@@ -3,6 +3,7 @@ package org.ruby_china.rubychina;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.webkit.WebSettings;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity implements TurbolinksAdapter
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
         TurbolinksSession.getDefault(this).setDebugLoggingEnabled(true);
+
+        WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
+        webSettings.setUserAgentString("turbolinks-app, ruby-china, official, android");
 
         location = getIntent().getStringExtra(INTENT_URL) != null ? getIntent().getStringExtra(INTENT_URL) : BASE_URL;
 
