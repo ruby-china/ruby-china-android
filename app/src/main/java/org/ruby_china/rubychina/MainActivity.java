@@ -3,6 +3,7 @@ package org.ruby_china.rubychina;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebSettings;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
@@ -21,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements TurbolinksAdapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
