@@ -12,7 +12,7 @@ import com.basecamp.turbolinks.TurbolinksView;
 
 public class MainActivity extends AppCompatActivity implements TurbolinksAdapter {
 
-    private static final String BASE_URL = "https://ruby-china.org";
+    private static final String BASE_URL = "https://ruby-china.org/topics";
     private static final String INTENT_URL = "intentUrl";
 
     private String location;
