@@ -1,42 +1,39 @@
 package org.ruby_china.rubychina;
 
-import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.webkit.WebSettings;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
-public class MainActivity extends AppCompatActivity implements TurbolinksAdapter {
+public class TopicActivity extends AppCompatActivity implements TurbolinksAdapter {
 
-    private static final String BASE_URL = "https://ruby-china.org/topics";
     private static final String INTENT_URL = "intentUrl";
 
+    private String location;
     private TurbolinksView turbolinksView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_topic);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.topic_toolbar);
         setSupportActionBar(myToolbar);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
 
-        turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
-
-        TurbolinksSession.getDefault(this).setDebugLoggingEnabled(true);
-
-        WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
-        webSettings.setUserAgentString("turbolinks-app, ruby-china, official, android");
+        turbolinksView = (TurbolinksView) findViewById(R.id.topic_turbolinks_view);
+        location = getIntent().getStringExtra(INTENT_URL);
 
         TurbolinksSession.getDefault(this)
                          .activity(this)
                          .adapter(this)
                          .view(turbolinksView)
-                         .visit(BASE_URL);
+                         .visit(location);
     }
 
     @Override
@@ -48,25 +45,12 @@ public class MainActivity extends AppCompatActivity implements TurbolinksAdapter
                 .adapter(this)
                 .restoreWithCachedSnapshot(true)
                 .view(turbolinksView)
-                .visit(BASE_URL);
+                .visit(location);
     }
 
     @Override
     public void onPageFinished() {
 
-    }
-
-    @Override
-    public void visitProposedToLocationWithAction(String location, String action) {
-        Intent intent;
-
-        if (location.matches("https://ruby-china\\.org/topics/\\d+")) {
-            intent = new Intent(this, TopicActivity.class);
-            intent.putExtra(INTENT_URL, location);
-
-            this.startActivity(intent);
-        } else {
-        }
     }
 
     @Override
@@ -86,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements TurbolinksAdapter
 
     @Override
     public void visitCompleted() {
+
+    }
+
+    @Override
+    public void visitProposedToLocationWithAction(String location, String action) {
 
     }
 }
