@@ -7,21 +7,22 @@ import android.support.v7.widget.Toolbar;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
-public class TopicActivity extends BaseActivity {
+public class EmptyActivity extends BaseActivity {
 
     private static final String INTENT_URL = "intentUrl";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topic);
+        setContentView(R.layout.activity_empty);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.topic_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.empty_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle("");
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        turbolinksView = (TurbolinksView) findViewById(R.id.topic_turbolinks_view);
+        turbolinksView = (TurbolinksView) findViewById(R.id.empty_turbolinks_view);
         location = getIntent().getStringExtra(INTENT_URL);
 
         TurbolinksSession.getDefault(this)
