@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.ValueCallback;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
@@ -52,10 +54,18 @@ public class TopicActivity extends BaseActivity {
     }
 
     private void shareTopic() {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_TEXT, location);
-        shareIntent.setType("text/plain");
-        startActivity(shareIntent);
+        TurbolinksSession.getDefault(this).getWebView()
+                .evaluateJavascript("document.querySelector('h1').innerText;", new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                String title = value.substring(1, value.length() - 1);
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, title + " " + location);
+                shareIntent.setType("text/plain");
+                startActivity(shareIntent);
+            }
+        });
     }
+
 }
