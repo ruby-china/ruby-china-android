@@ -2,6 +2,7 @@ package org.ruby_china.rubychina;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebSettings;
 
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -33,4 +34,7 @@ public class MainActivity extends BaseActivity {
                 .visit(location);
     }
 
+    public void newTopic(View view) {
+        visitProposedToLocationWithAction("https://ruby-china.org/topics/new", "advance");
+    }
 }
