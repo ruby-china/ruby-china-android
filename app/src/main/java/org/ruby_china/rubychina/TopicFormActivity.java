@@ -53,7 +53,7 @@ public class TopicFormActivity extends BaseActivity {
 
     private void topicSave() {
         TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
-                "document.querySelector('#main form').submit();",
+                "$('#main form').submit();",
                 null
         );
     }

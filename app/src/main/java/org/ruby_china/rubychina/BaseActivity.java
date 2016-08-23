@@ -43,7 +43,13 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
     @Override
     public void requestFailedWithStatusCode(int statusCode) {
-
+        switch (statusCode) {
+            case 401:
+                visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/sign_in", "advance");
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
