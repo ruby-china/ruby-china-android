@@ -55,18 +55,23 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     public void visitProposedToLocationWithAction(String location, String action) {
         Intent intent;
 
-        if (location.matches("^https://ruby-china\\.org/topics/\\d+")) {
-            intent = new Intent(this, TopicActivity.class);
-            intent.putExtra(INTENT_URL, location);
-        } else if (location.matches("^https://ruby-china\\.org/topics/new")) {
-            intent = new Intent(this, TopicFormActivity.class);
-            intent.putExtra(INTENT_URL, location);
-        } else if (location.matches("^https://ruby-china\\.org/.+")) {
-            intent = new Intent(this, EmptyActivity.class);
-            intent.putExtra(INTENT_URL, location);
+        Uri uri = Uri.parse(location);
+
+        if (location.startsWith(getString(R.string.root_url))) {
+            String path = uri.getPath();
+            if (path.matches("/topics/\\d+")) {
+                intent = new Intent(this, TopicActivity.class);
+                intent.putExtra(INTENT_URL, location);
+            } else if (path.matches("/topics/new")) {
+                intent = new Intent(this, TopicFormActivity.class);
+                intent.putExtra(INTENT_URL, location);
+            } else {
+                intent = new Intent(this, EmptyActivity.class);
+                intent.putExtra(INTENT_URL, location);
+            }
         } else {
             intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(location));
+            intent.setData(uri);
         }
 
         this.startActivity(intent);

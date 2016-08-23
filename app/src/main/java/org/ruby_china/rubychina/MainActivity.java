@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
         WebSettings webSettings = TurbolinksSession.getDefault(this).getWebView().getSettings();
         webSettings.setUserAgentString("turbolinks-app, ruby-china, official, android");
 
-        location = "https://ruby-china.org/topics";
+        location = getString(R.string.root_url) + "/topics";
 
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -35,6 +35,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void newTopic(View view) {
-        visitProposedToLocationWithAction("https://ruby-china.org/topics/new", "advance");
+        visitProposedToLocationWithAction(getString(R.string.root_url) + "/topics/new", "advance");
     }
 }
