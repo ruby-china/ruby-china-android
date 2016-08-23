@@ -48,6 +48,7 @@ public class TopicActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.action_topic_share:
                 shareTopic();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

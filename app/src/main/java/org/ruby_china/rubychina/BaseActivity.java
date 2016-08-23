@@ -9,7 +9,7 @@ import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
 public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter {
-    private static final String INTENT_URL = "intentUrl";
+    protected static final String INTENT_URL = "intentUrl";
 
     protected String location;
     protected TurbolinksView turbolinksView;
@@ -57,6 +57,9 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
         if (location.matches("^https://ruby-china\\.org/topics/\\d+")) {
             intent = new Intent(this, TopicActivity.class);
+            intent.putExtra(INTENT_URL, location);
+        } else if (location.matches("^https://ruby-china\\.org/topics/new")) {
+            intent = new Intent(this, TopicFormActivity.class);
             intent.putExtra(INTENT_URL, location);
         } else if (location.matches("^https://ruby-china\\.org/.+")) {
             intent = new Intent(this, EmptyActivity.class);
