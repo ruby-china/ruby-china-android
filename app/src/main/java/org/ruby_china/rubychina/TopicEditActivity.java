@@ -44,6 +44,9 @@ public class TopicEditActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
             case R.id.action_topic_update:
                 topicUpdate();
                 return true;
