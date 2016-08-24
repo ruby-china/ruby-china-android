@@ -22,7 +22,6 @@ public class TopicNewActivity extends BaseActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
 
         turbolinksView = (TurbolinksView) findViewById(R.id.topic_new_turbolinks_view);
-        location = getIntent().getStringExtra(INTENT_URL);
 
         TurbolinksSession.getDefault(this)
                 .activity(this)

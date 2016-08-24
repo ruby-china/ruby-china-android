@@ -9,8 +9,6 @@ import com.basecamp.turbolinks.TurbolinksView;
 
 public class EmptyActivity extends BaseActivity {
 
-    private static final String INTENT_URL = "intentUrl";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,11 +17,9 @@ public class EmptyActivity extends BaseActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.empty_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setTitle("");
         actionbar.setDisplayHomeAsUpEnabled(true);
 
         turbolinksView = (TurbolinksView) findViewById(R.id.empty_turbolinks_view);
-        location = getIntent().getStringExtra(INTENT_URL);
 
         TurbolinksSession.getDefault(this)
                 .activity(this)

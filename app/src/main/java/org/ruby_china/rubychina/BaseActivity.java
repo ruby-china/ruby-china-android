@@ -2,6 +2,8 @@ package org.ruby_china.rubychina;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
@@ -14,6 +16,13 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
     protected String location;
     protected TurbolinksView turbolinksView;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        location = getIntent().getStringExtra(INTENT_URL);
+    }
 
     @Override
     protected void onRestart() {
