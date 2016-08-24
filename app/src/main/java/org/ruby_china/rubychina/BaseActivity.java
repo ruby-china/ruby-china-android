@@ -3,6 +3,7 @@ package org.ruby_china.rubychina;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -69,7 +70,10 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
                 intent = new Intent(this, TopicActivity.class);
                 intent.putExtra(INTENT_URL, location);
             } else if (path.matches("/topics/new")) {
-                intent = new Intent(this, TopicFormActivity.class);
+                intent = new Intent(this, TopicNewActivity.class);
+                intent.putExtra(INTENT_URL, location);
+            } else if (path.matches("/topics/\\d+/edit")) {
+                intent = new Intent(this, TopicEditActivity.class);
                 intent.putExtra(INTENT_URL, location);
             } else {
                 intent = new Intent(this, EmptyActivity.class);
@@ -81,5 +85,16 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
         }
 
         this.startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
