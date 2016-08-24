@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_topics"
+        android:title="话题" />
+    <item
+        android:id="@+id/nav_settings"
+        android:title="设置" />
+</menu>
