@@ -84,6 +84,9 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
             } else if (path.matches("/topics/\\d+/edit")) {
                 intent = new Intent(this, TopicEditActivity.class);
                 intent.putExtra(INTENT_URL, location);
+            } else if (path.matches("/topics/\\d+/replies/\\d+/edit")) {
+                intent = new Intent(this, ReplyEditActivity.class);
+                intent.putExtra(INTENT_URL, location);
             } else {
                 intent = new Intent(this, EmptyActivity.class);
                 intent.putExtra(INTENT_URL, location);

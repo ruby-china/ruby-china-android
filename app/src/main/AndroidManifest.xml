@@ -20,14 +20,16 @@
         <activity
             android:name=".TopicActivity"
             android:label="话题" />
-        <activity
-            android:name=".EmptyActivity" />
+        <activity android:name=".EmptyActivity" />
         <activity
             android:name=".TopicNewActivity"
             android:label="新话题" />
         <activity
             android:name=".TopicEditActivity"
             android:label="编辑话题" />
+        <activity
+            android:name=".ReplyEditActivity"
+            android:label="编辑回复" />
     </application>
 
 </manifest>
