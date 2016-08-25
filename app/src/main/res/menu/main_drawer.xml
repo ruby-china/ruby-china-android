@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
-            android:title="首页" />
+            android:title="讨论区" />
     </group>
     <group
         android:id="@+id/group_logined">
