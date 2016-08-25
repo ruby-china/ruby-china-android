@@ -18,10 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends BaseActivity
-    implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
+
+    JSONObject mAppData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,6 @@ public class MainActivity extends BaseActivity
         webSettings.setUserAgentString("turbolinks-app, ruby-china, official, android");
 
         location = getString(R.string.root_url) + "/topics";
-
-        setAsLogined(false);
 
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -95,7 +95,7 @@ public class MainActivity extends BaseActivity
         }
     }
 
-    class VisitCompletedCallback implements  ValueCallback<String> {
+    class VisitCompletedCallback implements ValueCallback<String> {
         MainActivity mActivity;
 
         public VisitCompletedCallback(MainActivity activity) {
@@ -106,9 +106,10 @@ public class MainActivity extends BaseActivity
         public void onReceiveValue(String value) {
             try {
                 JSONObject appData = new JSONObject(value);
-                boolean logined = appData.has("current_user_id");
-                mActivity.setAsLogined(logined);
+                mActivity.setAppData(appData);
+                mActivity.updateNavigationView();
             } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -123,7 +124,12 @@ public class MainActivity extends BaseActivity
         super.visitCompleted();
     }
 
-    public void setAsLogined(boolean logined) {
+    public void setAppData(JSONObject appData) {
+        mAppData = appData;
+    }
+
+    public void updateNavigationView() {
+        boolean logined = mAppData.has("current_user_id");
         mNavigationView.getMenu().setGroupVisible(R.id.group_login, !logined);
         mNavigationView.getMenu().setGroupVisible(R.id.group_logined, logined);
     }
