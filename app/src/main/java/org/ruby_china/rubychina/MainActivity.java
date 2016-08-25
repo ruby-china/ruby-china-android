@@ -42,6 +42,7 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navigationView.setItemIconTintList(null);
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
         TurbolinksSession.getDefault(this).setDebugLoggingEnabled(true);
