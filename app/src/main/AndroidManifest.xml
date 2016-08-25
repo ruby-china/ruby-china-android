@@ -34,6 +34,10 @@
         <activity
             android:name=".ReplyEditActivity"
             android:label="编辑回复" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="设置"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

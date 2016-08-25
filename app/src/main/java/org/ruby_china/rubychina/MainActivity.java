@@ -1,19 +1,23 @@
 package org.ruby_china.rubychina;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity
+    implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -24,7 +28,6 @@ public class MainActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionbar = getSupportActionBar();
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -35,6 +38,9 @@ public class MainActivity extends BaseActivity {
                 R.string.navigation_drawer_close);
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         turbolinksView = (TurbolinksView) findViewById(R.id.turbolinks_view);
 
@@ -70,4 +76,19 @@ public class MainActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                return true;
+            case R.id.nav_settings:
+                visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/edit", "advance");
+                return true;
+            default:
+                return true;
+        }
+    }
+
 }

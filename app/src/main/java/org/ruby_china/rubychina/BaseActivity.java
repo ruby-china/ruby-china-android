@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -86,6 +85,9 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
                 intent.putExtra(INTENT_URL, location);
             } else if (path.matches("/topics/\\d+/replies/\\d+/edit")) {
                 intent = new Intent(this, ReplyEditActivity.class);
+                intent.putExtra(INTENT_URL, location);
+            } else if (path.matches("/account/edit")) {
+                intent = new Intent(this, SettingsActivity.class);
                 intent.putExtra(INTENT_URL, location);
             } else {
                 intent = new Intent(this, EmptyActivity.class);
