@@ -1,11 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_home"
-        android:icon="@drawable/ic_home_black_24dp"
-        android:title="首页" />
-    <item
-        android:id="@+id/nav_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="设置" />
+    <group
+        android:id="@+id/group_nav">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="首页" />
+    </group>
+    <group
+        android:id="@+id/group_logined">
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="设置" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="退出" />
+    </group>
+    <group
+        android:id="@+id/group_login">
+        <item
+            android:id="@+id/nav_signup"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="注册" />
+        <item
+            android:id="@+id/nav_login"
+            android:title="登录" />
+    </group>
 </menu>
