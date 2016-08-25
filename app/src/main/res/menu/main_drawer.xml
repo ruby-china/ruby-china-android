@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_topics"
-        android:title="话题" />
+        android:title="讨论区" />
     <item
         android:id="@+id/nav_settings"
         android:title="设置" />
