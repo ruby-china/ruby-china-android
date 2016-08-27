@@ -85,8 +85,6 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
-            case R.id.nav_home:
-                return true;
             case R.id.nav_settings:
                 visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/edit", "advance");
                 return true;
@@ -130,7 +128,7 @@ public class MainActivity extends BaseActivity
 
     public void updateNavigationView() {
         boolean logined = mAppData.has("current_user_id");
-        mNavigationView.getMenu().setGroupVisible(R.id.group_login, !logined);
-        mNavigationView.getMenu().setGroupVisible(R.id.group_logined, logined);
+        mNavigationView.getMenu().setGroupVisible(R.id.group_guest, !logined);
+        mNavigationView.getMenu().setGroupVisible(R.id.group_user, logined);
     }
 }

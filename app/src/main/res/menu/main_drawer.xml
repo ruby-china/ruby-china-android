@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group
-        android:id="@+id/group_nav">
-        <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
-            android:title="讨论区" />
-    </group>
-    <group
-        android:id="@+id/group_logined"
+        android:id="@+id/group_user"
         android:visible="false">
         <item
             android:id="@+id/nav_settings"
@@ -19,7 +12,7 @@
             android:title="退出" />
     </group>
     <group
-        android:id="@+id/group_login">
+        android:id="@+id/group_guest">
         <item
             android:id="@+id/nav_signup"
             android:icon="@drawable/ic_settings_black_24dp"
