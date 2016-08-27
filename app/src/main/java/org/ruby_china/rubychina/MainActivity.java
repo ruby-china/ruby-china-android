@@ -6,6 +6,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -28,7 +29,7 @@ public class MainActivity extends BaseActivity
     private TextView mUserNameTextView;
     private TextView mUserEmailTextView;
 
-    JSONObject mAppData;
+    JSONObject mCurrenetUserMeta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +96,12 @@ public class MainActivity extends BaseActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         switch (item.getItemId()) {
+            case R.id.nav_sign_up:
+                visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/sign_up", "advance");
+                return true;
+            case R.id.nav_sign_in:
+                visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/sign_in", "advance");
+                return true;
             case R.id.nav_settings:
                 visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/edit", "advance");
                 return true;
@@ -112,40 +119,40 @@ public class MainActivity extends BaseActivity
 
         @Override
         public void onReceiveValue(String value) {
+            Log.d("Test", value);
             try {
                 JSONObject appData = new JSONObject(value);
                 mActivity.setAppData(appData);
-                mActivity.updateNavigationView();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            mActivity.updateNavigationView();
         }
     }
 
     @Override
     public void visitCompleted() {
         TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
-                "App;",
+                "$('meta[name=\"current-user\"]').data()",
                 new VisitCompletedCallback(this)
         );
 
         super.visitCompleted();
     }
 
-    public void setAppData(JSONObject appData) {
-        mAppData = appData;
+    public void setAppData(JSONObject userMeta) {
+        mCurrenetUserMeta = userMeta;
     }
 
     public void updateNavigationView() {
-        if (mAppData.has("current_user_id")) {
+        if (mCurrenetUserMeta != null) {
             mNavigationView.getMenu().setGroupVisible(R.id.group_guest, false);
             mNavigationView.getMenu().setGroupVisible(R.id.group_user, true);
 
             try {
-                mUserAvatarImageView.setImageURI(mAppData.getString("asset_url") + "/user/avatar/" + mAppData.getInt("current_user_id") + ".jpg!md");
-                mUserNameTextView.setText(mAppData.getString("current_user_name"));
-                mUserEmailTextView.setText(mAppData.getString("current_user_email"));
-
+                mUserAvatarImageView.setImageURI(mCurrenetUserMeta.getString("userAvatarUrl"));
+                mUserNameTextView.setText(mCurrenetUserMeta.getString("userLogin"));
+                mUserEmailTextView.setText(mCurrenetUserMeta.getString("userEmail"));
             } catch (JSONException e){
                 e.printStackTrace();
             }

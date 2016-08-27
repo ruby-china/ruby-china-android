@@ -14,11 +14,10 @@
     <group
         android:id="@+id/group_guest">
         <item
-            android:id="@+id/nav_signup"
-            android:icon="@drawable/ic_settings_black_24dp"
+            android:id="@+id/nav_sign_up"
             android:title="注册" />
         <item
-            android:id="@+id/nav_login"
+            android:id="@+id/nav_sign_in"
             android:title="登录" />
     </group>
 </menu>
