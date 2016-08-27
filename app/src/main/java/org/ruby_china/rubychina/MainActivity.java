@@ -102,6 +102,9 @@ public class MainActivity extends BaseActivity
             case R.id.nav_sign_in:
                 visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/sign_in", "advance");
                 return true;
+            case R.id.nav_sign_out:
+                signOut();
+                return true;
             case R.id.nav_settings:
                 visitProposedToLocationWithAction(getString(R.string.root_url) + "/account/edit", "advance");
                 return true;
@@ -119,7 +122,6 @@ public class MainActivity extends BaseActivity
 
         @Override
         public void onReceiveValue(String value) {
-            Log.d("Test", value);
             try {
                 JSONObject appData = new JSONObject(value);
                 mActivity.setAppData(appData);
@@ -165,5 +167,12 @@ public class MainActivity extends BaseActivity
             mUserEmailTextView.setText("guest@ruby-china.org");
         }
 
+    }
+
+    public void signOut() {
+        TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
+                "$.ajax({ url: '/account/sign_out', method: 'DELETE' });",
+                null
+        );
     }
 }
