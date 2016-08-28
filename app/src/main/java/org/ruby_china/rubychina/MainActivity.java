@@ -95,7 +95,6 @@ public class MainActivity extends BaseActivity
         public boolean onMenuItemActionCollapse(MenuItem item) {
             if (mSearched) {
                 mActivity.searchCLose();
-                mSearched = false;
             }
 
             return true;
@@ -121,7 +120,8 @@ public class MainActivity extends BaseActivity
     public boolean onQueryTextSubmit(String query) {
         try {
             mSearched = true;
-            TurbolinksSession.getDefault(this).visit(getString(R.string.root_url) + "/search?q=" + URLEncoder.encode(query, "UTF-8"));
+            location = getString(R.string.root_url) + "/search?q=" + URLEncoder.encode(query, "UTF-8");
+            TurbolinksSession.getDefault(this).visit(location);
         } catch (UnsupportedEncodingException e){
             e.printStackTrace();
         }
@@ -135,7 +135,9 @@ public class MainActivity extends BaseActivity
     }
 
     private void searchCLose() {
-        TurbolinksSession.getDefault(this).visit(getString(R.string.root_url) + "/topics");
+        location = getString(R.string.root_url) + "/topics";
+        TurbolinksSession.getDefault(this).visit(location);
+        mSearched = false;
     }
 
     @Override
