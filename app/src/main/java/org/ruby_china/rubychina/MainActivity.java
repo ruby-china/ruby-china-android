@@ -3,10 +3,12 @@ package org.ruby_china.rubychina;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -20,14 +22,18 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private NavigationView mNavigationView;
     private SimpleDraweeView mUserAvatarImageView;
     private TextView mUserNameTextView;
     private TextView mUserEmailTextView;
+    private boolean mSearched = false;
 
     JSONObject mCurrenetUserMeta;
 
@@ -71,6 +77,73 @@ public class MainActivity extends BaseActivity
                 .adapter(this)
                 .view(turbolinksView)
                 .visit(location);
+    }
+
+    class SearchExpandListener implements MenuItemCompat.OnActionExpandListener {
+        private MainActivity mActivity;
+
+        public SearchExpandListener(MainActivity activity) {
+            mActivity = activity;
+        }
+
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+            return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+            if (mSearched) {
+                mActivity.searchCLose();
+                mSearched = false;
+            }
+
+            return true;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(searchItem);
+
+        searchView.setOnQueryTextListener(this);
+
+        MenuItemCompat.setOnActionExpandListener(searchItem, new SearchExpandListener(this));
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        try {
+            mSearched = true;
+            TurbolinksSession.getDefault(this).visit(getString(R.string.root_url) + "/search?q=" + URLEncoder.encode(query, "UTF-8"));
+        } catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
+
+    private void searchCLose() {
+        TurbolinksSession.getDefault(this).visit(getString(R.string.root_url) + "/topics");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void newTopic(View view) {
@@ -123,8 +196,11 @@ public class MainActivity extends BaseActivity
         @Override
         public void onReceiveValue(String value) {
             try {
-                JSONObject appData = new JSONObject(value);
-                mActivity.setAppData(appData);
+                if (value.equals("null")) {
+                    mActivity.setAppData(null);
+                } else {
+                    mActivity.setAppData(new JSONObject(value));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
