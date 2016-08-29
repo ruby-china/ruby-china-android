@@ -3,8 +3,9 @@ package org.ruby_china.rubychina;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.webkit.ValueCallback;
+import android.webkit.WebView;
 
 import com.basecamp.turbolinks.TurbolinksAdapter;
 import com.basecamp.turbolinks.TurbolinksSession;
@@ -16,9 +17,41 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     protected String location;
     protected TurbolinksView turbolinksView;
 
+    private ValueCallback<Uri[]> mFilePathCallback;
+    private final int REQUEST_SELECT_FILE = 1001;
+    private boolean onSelectFileCallback = false;
+
+    class WebChromeClient extends android.webkit.WebChromeClient {
+        @Override
+        public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+            mFilePathCallback = filePathCallback;
+            startActivityForResult(fileChooserParams.createIntent(), REQUEST_SELECT_FILE);
+
+            return true;
+        }
+    }
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_SELECT_FILE:
+                if (resultCode == RESULT_OK && data != null) {
+                    mFilePathCallback.onReceiveValue(new Uri[] { data.getData() });
+                } else {
+                    mFilePathCallback.onReceiveValue(null);
+                }
+                onSelectFileCallback = true;
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        TurbolinksSession.getDefault(this).getWebView().setWebChromeClient(new WebChromeClient());
 
         location = getIntent().getStringExtra(INTENT_URL);
     }
@@ -27,12 +60,16 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
     protected void onRestart() {
         super.onRestart();
 
-        TurbolinksSession.getDefault(this)
-                .activity(this)
-                .adapter(this)
-                .restoreWithCachedSnapshot(true)
-                .view(turbolinksView)
-                .visit(location);
+        if (!onSelectFileCallback) {
+            TurbolinksSession.getDefault(this)
+                    .activity(this)
+                    .adapter(this)
+                    .restoreWithCachedSnapshot(true)
+                    .view(turbolinksView)
+                    .visit(location);
+        } else {
+            onSelectFileCallback = false;
+        }
     }
 
     @Override
