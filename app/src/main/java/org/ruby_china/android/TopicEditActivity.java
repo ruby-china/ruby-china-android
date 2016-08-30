@@ -1,7 +1,6 @@
-package org.ruby_china.rubychina;
+package org.ruby_china.android;
 
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,19 +9,19 @@ import android.view.MenuItem;
 import com.basecamp.turbolinks.TurbolinksSession;
 import com.basecamp.turbolinks.TurbolinksView;
 
-public class ReplyEditActivity extends BaseActivity {
+public class TopicEditActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reply_edit);
+        setContentView(R.layout.activity_topic_edit);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.reply_edit_toolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.topic_edit_toolbar);
         setSupportActionBar(myToolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
 
-        turbolinksView = (TurbolinksView) findViewById(R.id.reply_edit_turbolinks_view);
+        turbolinksView = (TurbolinksView) findViewById(R.id.topic_edit_turbolinks_view);
 
         TurbolinksSession.getDefault(this)
                 .activity(this)
@@ -33,7 +32,7 @@ public class ReplyEditActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.reply_edit_menu, menu);
+        getMenuInflater().inflate(R.menu.topic_edit_menu, menu);
 
         return true;
     }
@@ -45,7 +44,7 @@ public class ReplyEditActivity extends BaseActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            case R.id.action_reply_update:
+            case R.id.action_topic_update:
                 topicUpdate();
                 return true;
             default:
@@ -55,8 +54,9 @@ public class ReplyEditActivity extends BaseActivity {
 
     private void topicUpdate() {
         TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
-                "$('form[tb=\"edit-reply\"]').submit();",
+                "$('form[tb=\"edit-topic\"]').submit();",
                 null
         );
     }
+
 }

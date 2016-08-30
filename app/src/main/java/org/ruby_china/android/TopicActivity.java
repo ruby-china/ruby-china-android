@@ -1,10 +1,9 @@
-package org.ruby_china.rubychina;
+package org.ruby_china.android;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.ValueCallback;

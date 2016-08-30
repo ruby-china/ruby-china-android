@@ -1,4 +1,4 @@
-package org.ruby_china.rubychina;
+package org.ruby_china.android;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

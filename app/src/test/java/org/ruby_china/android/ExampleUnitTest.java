@@ -1,4 +1,4 @@
-package org.ruby_china.rubychina;
+package org.ruby_china.android;
 
 import org.junit.Test;
 
