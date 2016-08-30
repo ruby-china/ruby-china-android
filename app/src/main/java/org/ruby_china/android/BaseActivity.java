@@ -111,7 +111,9 @@ public class BaseActivity extends AppCompatActivity implements TurbolinksAdapter
 
         if (location.startsWith(getString(R.string.root_url))) {
             String path = uri.getPath();
-            if (path.matches("/topics/\\d+")) {
+            if (path.matches("/topics")) {
+                intent = new Intent(this, MainActivity.class);
+            } else if (path.matches("/topics/\\d+")) {
                 intent = new Intent(this, TopicActivity.class);
                 intent.putExtra(INTENT_URL, location);
             } else if (path.matches("/topics/new")) {
