@@ -41,14 +41,14 @@ public class TopicNewActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_topic_create:
-                topicCraete();
+                topicCreate();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void topicCraete() {
+    private void topicCreate() {
         TurbolinksSession.getDefault(this).getWebView().evaluateJavascript(
                 "$('form[tb=\"edit-topic\"]').submit();",
                 null
